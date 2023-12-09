@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptom Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Symptom Checker</h2>
+
+    <form id="symptomForm">
+        <label>
+            <input type="checkbox" name="symptoms" value="Fever"> Fever
+        </label>
+        <label>
+            <input type="checkbox" name="symptoms" value="Persistent Cough"> Persistent Cough
+        </label>
+        <!-- Add more symptom checkboxes as needed -->
+
+        <button type="button" onclick="getRecommendation()">Get Medication Recommendation</button>
+    </form>
+
+    <div id="recommendationResult"></div>
+
+    <script>
+        function getRecommendation() {
+            var form = document.getElementById("symptomForm");
+            var selectedSymptoms = [];
+            var checkboxes = form.elements["symptoms"];
+
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    selectedSymptoms.push(checkboxes[i].value);
+                }
+            }
+
+            var resultDiv = document.getElementById("recommendationResult");
+            resultDiv.innerHTML = "<h3>Medication Recommendations:</h3>";
+
+            if (selectedSymptoms.length > 0) {
+                for (var i = 0; i < selectedSymptoms.length; i++) {
+                    resultDiv.innerHTML += "<p>- Medication for " + selectedSymptoms[i] + ": " + getMedication(selectedSymptoms[i]) + "</p>";
+                }
+            } else {
+                resultDiv.innerHTML += "<p>No symptoms selected.</p>";
+            }
+        }
+
+        function getMedication(symptom) {
+            var medications = {
+                "Fever": "Acetaminophen or Ibuprofen",
+                "Persistent Cough": "Dextromethorphan",
+                // Add more medications as needed
+            };
+
+            return medications[symptom] || "Consult a healthcare professional for advice";
+        }
+    </script>
+
+</body>
+</html>
